@@ -2,6 +2,10 @@
 using Application.Features.ProgrammingLanguages.Commands.DeleteProgrammingLanguage;
 using Application.Features.ProgrammingLanguages.Commands.UpdateProgrammingLanguage;
 using Application.Features.ProgrammingLanguages.Dtos;
+using Application.Features.ProgrammingLanguages.Models;
+using Application.Features.ProgrammingLanguages.Queries.GetByIdProgrammingLanguage;
+using Application.Features.ProgrammingLanguages.Queries.GetListProgrammingLanguage;
+using Core.Application.Requests;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,7 +36,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        /*[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
         {
             GetListProgrammingLanguageQuery getListProgrammingLanguageQuery = new() { PageRequest = pageRequest };
@@ -45,6 +49,6 @@ namespace WebAPI.Controllers
         {
             ProgrammingLanguageGetByIdDto programmingLanguageGetByIdDto = await Mediator.Send(getByIdIdProgrammingLanguageQuery);
             return Ok(programmingLanguageGetByIdDto);
-        }*/
+        }
     }
 }
