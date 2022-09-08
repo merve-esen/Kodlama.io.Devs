@@ -8,7 +8,6 @@ namespace Application.Features.ProgrammingLanguages.Commands.UpdateProgrammingLa
         {
             RuleFor(p => p.Id).NotNull().GreaterThanOrEqualTo(0);
             RuleFor(p => p.Name).NotEmpty();
-            RuleFor(p => p.Name).MinimumLength(2);
         }
     }
 }
