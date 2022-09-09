@@ -19,6 +19,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Features\GithubAddresses\Constants\" />
+	  <Folder Include="Features\GithubAddresses\Rules\" />
 	  <Folder Include="Features\ProgrammingLanguages\Constants\" />
 	  <Folder Include="Features\Technologies\Constants\" />
 	</ItemGroup>
