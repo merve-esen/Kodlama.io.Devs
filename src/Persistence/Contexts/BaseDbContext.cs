@@ -8,7 +8,7 @@ namespace Persistence.Contexts
     {
         protected IConfiguration Configuration { get; set; }
         public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
-
+        public DbSet<Technology> Technologies { get; set; }
 
         public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
         {
@@ -24,11 +24,20 @@ namespace Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProgrammingLanguage>(a =>
+            modelBuilder.Entity<ProgrammingLanguage>(m =>
             {
-                a.ToTable("ProgrammingLanguages").HasKey(k => k.Id);
-                a.Property(p => p.Id).HasColumnName("Id");
-                a.Property(p => p.Name).HasColumnName("Name").HasMaxLength(50).IsRequired();
+                m.ToTable("ProgrammingLanguages").HasKey(k => k.Id);
+                m.Property(p => p.Id).HasColumnName("Id");
+                m.Property(p => p.Name).HasColumnName("Name").HasMaxLength(50).IsRequired();
+            });
+
+            modelBuilder.Entity<Technology>(m =>
+            {
+                m.ToTable("Technologies").HasKey(k => k.Id);
+                m.Property(p => p.Id).HasColumnName("Id");
+                m.Property(p => p.Name).HasColumnName("Name").HasMaxLength(50).IsRequired();
+                m.Property(p => p.ProgrammingLanguageId).HasColumnName("ProgrammingLanguageId");
+                m.HasOne(p => p.ProgrammingLanguage);
             });
 
             ProgrammingLanguage[] programmingLanguageSeeds = { new(1, "C#"), new(2, "Java"), new(3, "Python") };
