@@ -37,7 +37,6 @@ namespace Application.Features.ProgrammingLanguages.Commands.UpdateProgrammingLa
                 UpdatedProgrammingLanguageDto updatedProgrammingLanguageDto = _mapper.Map<UpdatedProgrammingLanguageDto>(updatedProgrammingLanguage);
 
                 return updatedProgrammingLanguageDto;
-
             }
         }
     }

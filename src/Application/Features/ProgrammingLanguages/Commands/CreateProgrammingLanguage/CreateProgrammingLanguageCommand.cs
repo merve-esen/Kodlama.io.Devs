@@ -33,7 +33,6 @@ namespace Application.Features.ProgrammingLanguages.Commands.CreateProgrammingLa
                 CreatedProgrammingLanguageDto createdProgrammingLanguageDto = _mapper.Map<CreatedProgrammingLanguageDto>(createdProgrammingLanguage);
 
                 return createdProgrammingLanguageDto;
-
             }
         }
     }
