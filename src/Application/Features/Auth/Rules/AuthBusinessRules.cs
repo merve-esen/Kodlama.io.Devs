@@ -1,4 +1,5 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Auth.Constants;
+using Application.Services.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Security.Entities;
 using Core.Security.Hashing;
@@ -17,19 +18,19 @@ namespace Application.Features.Auth.Rules
         public async Task UserEmailShouldBeNotExists(string email)
         {
             User? user = await _userRepository.GetAsync(u => u.Email == email);
-            if (user != null) throw new BusinessException("User mail already exists.");
+            if (user != null) throw new BusinessException(Messages.UserMailIsAlreadyExist);
         }
 
         public async Task UserShouldBeExists(User? user)
         {
-            if (user == null) throw new BusinessException("User not exists.");
+            if (user == null) throw new BusinessException(Messages.UserDoesNotExist);
         }
 
-        public async Task UserPasswordShouldBeMatch(int id, string password)
+        public async Task UserPasswordShouldBeMatch(string password, byte[] passwordHash, byte[] passwordSalt)
         {
-            User? user = await _userRepository.GetAsync(u => u.Id == id);
-            if (!HashingHelper.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-                throw new BusinessException("Password dont match.");
+            bool result = HashingHelper.VerifyPasswordHash(password, passwordHash, passwordSalt);
+            if (!result)
+                throw new BusinessException(Messages.PasswordDoesNotMatch);
 
         }
     }

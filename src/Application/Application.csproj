@@ -19,6 +19,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Features\Auth\Models\" />
 	  <Folder Include="Features\GithubAddresses\Constants\" />
 	  <Folder Include="Features\GithubAddresses\Rules\" />
 	  <Folder Include="Features\ProgrammingLanguages\Constants\" />

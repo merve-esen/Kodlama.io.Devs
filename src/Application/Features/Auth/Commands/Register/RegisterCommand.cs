@@ -1,5 +1,6 @@
-﻿using Application.Features.Auth.Models;
+﻿using Application.Features.Auth.Dtos;
 using Application.Features.Auth.Rules;
+using Application.Services.AuthService;
 using Application.Services.Repositories;
 using Core.Security.Dtos;
 using Core.Security.Entities;
@@ -9,49 +10,54 @@ using MediatR;
 
 namespace Application.Features.Auth.Commands.Register
 {
-    public class RegisterCommand : IRequest<RegisterModel>
+    public class RegisterCommand : IRequest<RegisteredDto>
     {
         public UserForRegisterDto UserForRegisterDto { get; set; }
-    }
+        public string IpAddress { get; set; }
 
-    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterModel>
-    {
-        private readonly ITokenHelper _tokenHelper;
-        private readonly IUserRepository _userRepository;
-        private readonly AuthBusinessRules _authBusinessRules;
-
-        public RegisterCommandHandler(ITokenHelper tokenHelper, IUserRepository userRepository, AuthBusinessRules authBusinessRules)
+        public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisteredDto>
         {
-            _tokenHelper = tokenHelper;
-            _userRepository = userRepository;
-            _authBusinessRules = authBusinessRules;
-        }
+            private readonly AuthBusinessRules _authBusinessRules;
+            private readonly IUserRepository _userRepository;
+            private readonly IAuthService _authService;
 
-        public async Task<RegisterModel> Handle(RegisterCommand request, CancellationToken cancellationToken)
-        {
-            await _authBusinessRules.UserEmailShouldBeNotExists(request.UserForRegisterDto.Email);
-
-            byte[] passwordHash, passwordSalt;
-            HashingHelper.CreatePasswordHash(request.UserForRegisterDto.Password, out passwordHash, out passwordSalt);
-            User user = new User
+            public RegisterCommandHandler(AuthBusinessRules authBusinessRules, IUserRepository userRepository, IAuthService authService)
             {
-                Email = request.UserForRegisterDto.Email,
-                FirstName = request.UserForRegisterDto.FirstName,
-                LastName = request.UserForRegisterDto.LastName,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                Status = true
-            };
-            User addedUser = await _userRepository.AddAsync(user);
+                _authBusinessRules = authBusinessRules;
+                _userRepository = userRepository;
+                _authService = authService;
+            }
 
-            var claims = _userRepository.GetClaims(user);
-            var accessToken = _tokenHelper.CreateToken(user, claims);
-
-            return new()
+            public async Task<RegisteredDto> Handle(RegisterCommand request, CancellationToken cancellationToken)
             {
-                Expiration = accessToken.Expiration,
-                Token = accessToken.Token
-            };
+                await _authBusinessRules.UserEmailShouldBeNotExists(request.UserForRegisterDto.Email);
+                byte[] passwordHash, passwordSalt;
+                HashingHelper.CreatePasswordHash(request.UserForRegisterDto.Password, out passwordHash, out passwordSalt);
+
+                User newUser = new()
+                {
+                    Email = request.UserForRegisterDto.Email,
+                    PasswordHash = passwordHash,
+                    PasswordSalt = passwordSalt,
+                    FirstName = request.UserForRegisterDto.FirstName,
+                    LastName = request.UserForRegisterDto.LastName,
+                    Status = true
+                };
+
+                User createdUser = await _userRepository.AddAsync(newUser);
+
+                AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);
+                RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(createdUser, request.IpAddress);
+                RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
+
+                RegisteredDto registeredDto = new()
+                {
+                    RefreshToken = addedRefreshToken,
+                    AccessToken = createdAccessToken,
+                };
+
+                return registeredDto;
+            }
         }
     }
 }
