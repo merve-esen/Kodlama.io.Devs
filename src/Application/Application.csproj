@@ -22,16 +22,8 @@
 	  <Folder Include="Features\Auth\Models\" />
 	  <Folder Include="Features\GithubAddresses\Constants\" />
 	  <Folder Include="Features\GithubAddresses\Rules\" />
-	  <Folder Include="Features\OperationClaims\Constants\" />
 	  <Folder Include="Features\ProgrammingLanguages\Constants\" />
 	  <Folder Include="Features\Technologies\Constants\" />
-	  <Folder Include="Features\UserOperationClaims\Commands\" />
-	  <Folder Include="Features\UserOperationClaims\Constants\" />
-	  <Folder Include="Features\UserOperationClaims\Dtos\" />
-	  <Folder Include="Features\UserOperationClaims\Models\" />
-	  <Folder Include="Features\UserOperationClaims\Rules\" />
-	  <Folder Include="Features\UserOperationClaims\Queries\" />
-	  <Folder Include="Features\UserOperationClaims\Profiles\" />
 	</ItemGroup>
 
 </Project>
