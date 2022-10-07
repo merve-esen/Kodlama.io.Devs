@@ -1,13 +1,15 @@
 ﻿using Application.Features.UserOperationClaims.Rules;
 using Application.Services.Repositories;
+using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using MediatR;
 
 namespace Application.Features.UserOperationClaims.Commands.DeleteUserOperationClaim
 {
-    public class DeleteUserOperationClaimCommand : IRequest
+    public class DeleteUserOperationClaimCommand : IRequest, ISecuredRequest
     {
         public int Id { get; set; }
+        public string[] Roles { get; } = new string[1] { "admin" };
 
         public class DeleteUserOperationClaimCommandHandler : IRequestHandler<DeleteUserOperationClaimCommand>
         {
