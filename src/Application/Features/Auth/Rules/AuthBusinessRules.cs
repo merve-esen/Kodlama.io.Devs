@@ -18,19 +18,19 @@ namespace Application.Features.Auth.Rules
         public async Task UserEmailShouldBeNotExists(string email)
         {
             User? user = await _userRepository.GetAsync(u => u.Email == email);
-            if (user != null) throw new BusinessException(Messages.UserMailIsAlreadyExist);
+            if (user != null) throw new BusinessException(AuthMessages.UserMailIsAlreadyExist);
         }
 
         public async Task UserShouldBeExists(User? user)
         {
-            if (user == null) throw new BusinessException(Messages.UserDoesNotExist);
+            if (user == null) throw new BusinessException(AuthMessages.UserDoesNotExist);
         }
 
         public async Task UserPasswordShouldBeMatch(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             bool result = HashingHelper.VerifyPasswordHash(password, passwordHash, passwordSalt);
             if (!result)
-                throw new BusinessException(Messages.PasswordDoesNotMatch);
+                throw new BusinessException(AuthMessages.PasswordDoesNotMatch);
 
         }
     }

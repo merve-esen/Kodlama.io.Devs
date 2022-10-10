@@ -17,12 +17,12 @@ namespace Application.Features.OperationClaims.Rules
         public async Task OperationClaimCanNotBeDuplicatedWhenInserted(string name)
         {
             OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(o => o.Name == name);
-            if (operationClaim != null) throw new BusinessException(Messages.OperationClaimIsAlreadyExist);
+            if (operationClaim != null) throw new BusinessException(OperationClaimMessages.OperationClaimIsAlreadyExist);
         }
 
         public void OperationClaimShouldExistWhenRequested(OperationClaim operationClaim)
         {
-            if (operationClaim == null) throw new BusinessException(Messages.OperationClaimDoesNotExist);
+            if (operationClaim == null) throw new BusinessException(OperationClaimMessages.OperationClaimDoesNotExist);
         }
     }
 }

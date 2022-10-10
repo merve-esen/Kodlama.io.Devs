@@ -18,18 +18,18 @@ namespace Application.Features.ProgrammingLanguages.Rules
         public async Task ProgrammingLanguageNameCanNotBeDuplicatedWhenInserting(string name)
         {
             IPaginate<ProgrammingLanguage> result = await _programmingLanguageRepository.GetListAsync(p => p.Name == name);
-            if (result.Items.Any()) throw new BusinessException(Messages.ProgrammingLanguageNameIsAlreadyExist);
+            if (result.Items.Any()) throw new BusinessException(ProgrammingLanguageMessages.ProgrammingLanguageNameIsAlreadyExist);
         }
 
         public void ProgrammingLanguageShouldExist(ProgrammingLanguage programmingLanguage)
         {
-            if (programmingLanguage == null) throw new BusinessException(Messages.ProgrammingLanguageNameDoesNotExist);
+            if (programmingLanguage == null) throw new BusinessException(ProgrammingLanguageMessages.ProgrammingLanguageNameDoesNotExist);
         }
 
         public async Task ProgrammingLanguageNameCanNotBeDuplicatedWhenUpdating(int id, string name)
         {
             IPaginate<ProgrammingLanguage> result = await _programmingLanguageRepository.GetListAsync(p => p.Id != id && p.Name == name);
-            if (result.Items.Any()) throw new BusinessException(Messages.ProgrammingLanguageNameIsAlreadyExist);
+            if (result.Items.Any()) throw new BusinessException(ProgrammingLanguageMessages.ProgrammingLanguageNameIsAlreadyExist);
         }
     }
 }
