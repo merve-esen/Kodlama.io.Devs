@@ -1,2 +1,2 @@
 # Kodlama.io.Devs
-Kodlama.io project
+kodlama.io .NET Camp project
