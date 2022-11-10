@@ -36,14 +36,14 @@ namespace WebAPI.Controllers
             return Created("", result);
         }
 
-        [HttpPost("Update")]
+        [HttpPut("Update")]
         public async Task<IActionResult> Update([FromBody] UpdateOperationClaimCommand updateOperationClaimCommand)
         {
             UpdatedOperationClaimDto result = await Mediator.Send(updateOperationClaimCommand);
             return Ok(result);
         }
 
-        [HttpPost("Delete/{Id}")]
+        [HttpDelete("Delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] DeleteOperationClaimCommand deleteOperationClaimCommand)
         {
             DeletedOperationClaimDto result = await Mediator.Send(deleteOperationClaimCommand);
