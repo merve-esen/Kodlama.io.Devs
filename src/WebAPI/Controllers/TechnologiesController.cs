@@ -20,14 +20,14 @@ namespace WebAPI.Controllers
             return Created("", result);
         }
 
-        [HttpPost("update")]
+        [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UpdateTechnologyCommand updateTechnologyCommand)
         {
             UpdatedTechnologyDto result = await Mediator.Send(updateTechnologyCommand);
             return Ok(result);
         }
 
-        [HttpPost("delete")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> Delete([FromBody] DeleteTechnologyCommand deleteTechnologyCommand)
         {
             DeletedTechnologyDto result = await Mediator.Send(deleteTechnologyCommand);
