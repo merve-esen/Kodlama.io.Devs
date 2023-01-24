@@ -1,9 +1,8 @@
-﻿namespace Application.Features.Auth.Constants
+﻿namespace Application.Features.Auth.Constants;
+
+public class AuthMessages
 {
-    public class AuthMessages
-    {
-        public const string UserMailIsAlreadyExist = "User mail is already exists.";
-        public const string UserDoesNotExist = "User does not exists.";
-        public const string PasswordDoesNotMatch = "Password does not match.";
-    }
+    public const string UserMailIsAlreadyExist = "User mail is already exists.";
+    public const string UserDoesNotExist = "User does not exists.";
+    public const string PasswordDoesNotMatch = "Password does not match.";
 }

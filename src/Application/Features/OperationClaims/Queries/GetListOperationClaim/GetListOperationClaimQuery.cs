@@ -7,34 +7,33 @@ using Core.Persistence.Paging;
 using Core.Security.Entities;
 using MediatR;
 
-namespace Application.Features.OperationClaims.Queries.GetListOperationClaim
+namespace Application.Features.OperationClaims.Queries.GetListOperationClaim;
+
+public class GetListOperationClaimQuery : IRequest<OperationClaimListModel>, ISecuredRequest
 {
-    public class GetListOperationClaimQuery : IRequest<OperationClaimListModel>, ISecuredRequest
+    public PageRequest? PageRequest { get; set; }
+    public string[] Roles { get; } = new string[1] { "admin" };
+
+    public class GetListOperationClaimQueryHandler : IRequestHandler<GetListOperationClaimQuery, OperationClaimListModel>
     {
-        public PageRequest? PageRequest { get; set; }
-        public string[] Roles { get; } = new string[1] { "admin" };
+        private readonly IOperationClaimRepository _operationClaimRepository;
+        private readonly IMapper _mapper;
 
-        public class GetListOperationClaimQueryHandler : IRequestHandler<GetListOperationClaimQuery, OperationClaimListModel>
+        public GetListOperationClaimQueryHandler(IOperationClaimRepository operationClaimRepository, IMapper mapper)
         {
-            private readonly IOperationClaimRepository _operationClaimRepository;
-            private readonly IMapper _mapper;
+            _operationClaimRepository = operationClaimRepository;
+            _mapper = mapper;
+        }
 
-            public GetListOperationClaimQueryHandler(IOperationClaimRepository operationClaimRepository, IMapper mapper)
-            {
-                _operationClaimRepository = operationClaimRepository;
-                _mapper = mapper;
-            }
+        public async Task<OperationClaimListModel> Handle(GetListOperationClaimQuery request, CancellationToken cancellationToken)
+        {
+            IPaginate<OperationClaim> operationClaims = await _operationClaimRepository.GetListAsync(
+                                                                        index: request.PageRequest!.Page,
+                                                                        size: request.PageRequest.PageSize);
 
-            public async Task<OperationClaimListModel> Handle(GetListOperationClaimQuery request, CancellationToken cancellationToken)
-            {
-                IPaginate<OperationClaim> operationClaims = await _operationClaimRepository.GetListAsync(
-                                                                            index: request.PageRequest!.Page,
-                                                                            size: request.PageRequest.PageSize);
+            OperationClaimListModel operationClaimListModel = _mapper.Map<OperationClaimListModel>(operationClaims);
 
-                OperationClaimListModel operationClaimListModel = _mapper.Map<OperationClaimListModel>(operationClaims);
-
-                return operationClaimListModel;
-            }
+            return operationClaimListModel;
         }
     }
 }

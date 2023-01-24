@@ -4,34 +4,33 @@ using Core.CrossCuttingConcerns.Exceptions;
 using Core.Security.Entities;
 using Core.Security.Hashing;
 
-namespace Application.Features.Auth.Rules
+namespace Application.Features.Auth.Rules;
+
+public class AuthBusinessRules
 {
-    public class AuthBusinessRules
+    private readonly IUserRepository _userRepository;
+
+    public AuthBusinessRules(IUserRepository userRepository)
     {
-        private readonly IUserRepository _userRepository;
+        _userRepository = userRepository;
+    }
 
-        public AuthBusinessRules(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
+    public async Task UserEmailShouldBeNotExists(string email)
+    {
+        User? user = await _userRepository.GetAsync(u => u.Email == email);
+        if (user != null) throw new BusinessException(AuthMessages.UserMailIsAlreadyExist);
+    }
 
-        public async Task UserEmailShouldBeNotExists(string email)
-        {
-            User? user = await _userRepository.GetAsync(u => u.Email == email);
-            if (user != null) throw new BusinessException(AuthMessages.UserMailIsAlreadyExist);
-        }
+    public async Task UserShouldBeExists(User? user)
+    {
+        if (user == null) throw new BusinessException(AuthMessages.UserDoesNotExist);
+    }
 
-        public async Task UserShouldBeExists(User? user)
-        {
-            if (user == null) throw new BusinessException(AuthMessages.UserDoesNotExist);
-        }
+    public async Task UserPasswordShouldBeMatch(string password, byte[] passwordHash, byte[] passwordSalt)
+    {
+        bool result = HashingHelper.VerifyPasswordHash(password, passwordHash, passwordSalt);
+        if (!result)
+            throw new BusinessException(AuthMessages.PasswordDoesNotMatch);
 
-        public async Task UserPasswordShouldBeMatch(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            bool result = HashingHelper.VerifyPasswordHash(password, passwordHash, passwordSalt);
-            if (!result)
-                throw new BusinessException(AuthMessages.PasswordDoesNotMatch);
-
-        }
     }
 }

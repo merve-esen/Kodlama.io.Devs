@@ -5,35 +5,34 @@ using AutoMapper;
 using Domain.Entities;
 using MediatR;
 
-namespace Application.Features.ProgrammingLanguages.Commands.CreateProgrammingLanguage
+namespace Application.Features.ProgrammingLanguages.Commands.CreateProgrammingLanguage;
+
+public partial class CreateProgrammingLanguageCommand : IRequest<CreatedProgrammingLanguageDto>
 {
-    public partial class CreateProgrammingLanguageCommand : IRequest<CreatedProgrammingLanguageDto>
+    public string Name { get; set; }
+
+    public class CreateProgrammingLanguageCommandHandler : IRequestHandler<CreateProgrammingLanguageCommand, CreatedProgrammingLanguageDto>
     {
-        public string Name { get; set; }
+        private readonly IProgrammingLanguageRepository _programmingLanguageRepository;
+        private readonly IMapper _mapper;
+        private readonly ProgrammingLanguageBusinessRules _programmingLanguageBusinessRules;
 
-        public class CreateProgrammingLanguageCommandHandler : IRequestHandler<CreateProgrammingLanguageCommand, CreatedProgrammingLanguageDto>
+        public CreateProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper, ProgrammingLanguageBusinessRules programmingLanguageBusinessRules)
         {
-            private readonly IProgrammingLanguageRepository _programmingLanguageRepository;
-            private readonly IMapper _mapper;
-            private readonly ProgrammingLanguageBusinessRules _programmingLanguageBusinessRules;
+            _programmingLanguageRepository = programmingLanguageRepository;
+            _mapper = mapper;
+            _programmingLanguageBusinessRules = programmingLanguageBusinessRules;
+        }
 
-            public CreateProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper, ProgrammingLanguageBusinessRules programmingLanguageBusinessRules)
-            {
-                _programmingLanguageRepository = programmingLanguageRepository;
-                _mapper = mapper;
-                _programmingLanguageBusinessRules = programmingLanguageBusinessRules;
-            }
+        public async Task<CreatedProgrammingLanguageDto> Handle(CreateProgrammingLanguageCommand request, CancellationToken cancellationToken)
+        {
+            await _programmingLanguageBusinessRules.ProgrammingLanguageNameCanNotBeDuplicatedWhenInserting(request.Name);
 
-            public async Task<CreatedProgrammingLanguageDto> Handle(CreateProgrammingLanguageCommand request, CancellationToken cancellationToken)
-            {
-                await _programmingLanguageBusinessRules.ProgrammingLanguageNameCanNotBeDuplicatedWhenInserting(request.Name);
+            ProgrammingLanguage mappedProgrammingLanguage = _mapper.Map<ProgrammingLanguage>(request);
+            ProgrammingLanguage createdProgrammingLanguage = await _programmingLanguageRepository.AddAsync(mappedProgrammingLanguage);
+            CreatedProgrammingLanguageDto createdProgrammingLanguageDto = _mapper.Map<CreatedProgrammingLanguageDto>(createdProgrammingLanguage);
 
-                ProgrammingLanguage mappedProgrammingLanguage = _mapper.Map<ProgrammingLanguage>(request);
-                ProgrammingLanguage createdProgrammingLanguage = await _programmingLanguageRepository.AddAsync(mappedProgrammingLanguage);
-                CreatedProgrammingLanguageDto createdProgrammingLanguageDto = _mapper.Map<CreatedProgrammingLanguageDto>(createdProgrammingLanguage);
-
-                return createdProgrammingLanguageDto;
-            }
+            return createdProgrammingLanguageDto;
         }
     }
 }

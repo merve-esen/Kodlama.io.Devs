@@ -5,38 +5,37 @@ using AutoMapper;
 using Domain.Entities;
 using MediatR;
 
-namespace Application.Features.ProgrammingLanguages.Commands.DeleteProgrammingLanguage
+namespace Application.Features.ProgrammingLanguages.Commands.DeleteProgrammingLanguage;
+
+public partial class DeleteProgrammingLanguageCommand : IRequest<DeletedProgrammingLanguageDto>
 {
-    public partial class DeleteProgrammingLanguageCommand : IRequest<DeletedProgrammingLanguageDto>
+    public int Id { get; set; }
+
+    public class DeleteProgrammingLanguageCommandHandler : IRequestHandler<DeleteProgrammingLanguageCommand, DeletedProgrammingLanguageDto>
     {
-        public int Id { get; set; }
+        private readonly IProgrammingLanguageRepository _programmingLanguageRepository;
+        private readonly IMapper _mapper;
+        private readonly ProgrammingLanguageBusinessRules _programmingLanguageBusinessRules;
 
-        public class DeleteProgrammingLanguageCommandHandler : IRequestHandler<DeleteProgrammingLanguageCommand, DeletedProgrammingLanguageDto>
+        public DeleteProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper, ProgrammingLanguageBusinessRules programmingLanguageBusinessRules)
         {
-            private readonly IProgrammingLanguageRepository _programmingLanguageRepository;
-            private readonly IMapper _mapper;
-            private readonly ProgrammingLanguageBusinessRules _programmingLanguageBusinessRules;
+            _programmingLanguageRepository = programmingLanguageRepository;
+            _mapper = mapper;
+            _programmingLanguageBusinessRules = programmingLanguageBusinessRules;
+        }
 
-            public DeleteProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper, ProgrammingLanguageBusinessRules programmingLanguageBusinessRules)
-            {
-                _programmingLanguageRepository = programmingLanguageRepository;
-                _mapper = mapper;
-                _programmingLanguageBusinessRules = programmingLanguageBusinessRules;
-            }
+        public async Task<DeletedProgrammingLanguageDto> Handle(DeleteProgrammingLanguageCommand request, CancellationToken cancellationToken)
+        {
+            //ProgrammingLanguage mappedProgrammingLanguage = _mapper.Map<ProgrammingLanguage>(request);
+            ProgrammingLanguage? programmingLanguage = await _programmingLanguageRepository.GetAsync(p => p.Id == request.Id);
 
-            public async Task<DeletedProgrammingLanguageDto> Handle(DeleteProgrammingLanguageCommand request, CancellationToken cancellationToken)
-            {
-                //ProgrammingLanguage mappedProgrammingLanguage = _mapper.Map<ProgrammingLanguage>(request);
-                ProgrammingLanguage? programmingLanguage = await _programmingLanguageRepository.GetAsync(p => p.Id == request.Id);
+            _programmingLanguageBusinessRules.ProgrammingLanguageShouldExist(programmingLanguage);
 
-                _programmingLanguageBusinessRules.ProgrammingLanguageShouldExist(programmingLanguage);
+            ProgrammingLanguage deletedProgrammingLanguage = await _programmingLanguageRepository.DeleteAsync(programmingLanguage);
+            DeletedProgrammingLanguageDto deletedProgrammingLanguageDto = _mapper.Map<DeletedProgrammingLanguageDto>(deletedProgrammingLanguage);
 
-                ProgrammingLanguage deletedProgrammingLanguage = await _programmingLanguageRepository.DeleteAsync(programmingLanguage);
-                DeletedProgrammingLanguageDto deletedProgrammingLanguageDto = _mapper.Map<DeletedProgrammingLanguageDto>(deletedProgrammingLanguage);
+            return deletedProgrammingLanguageDto;
 
-                return deletedProgrammingLanguageDto;
-
-            }
         }
     }
 }

@@ -4,34 +4,33 @@ using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using MediatR;
 
-namespace Application.Features.UserOperationClaims.Commands.DeleteUserOperationClaim
+namespace Application.Features.UserOperationClaims.Commands.DeleteUserOperationClaim;
+
+public class DeleteUserOperationClaimCommand : IRequest, ISecuredRequest
 {
-    public class DeleteUserOperationClaimCommand : IRequest, ISecuredRequest
+    public int Id { get; set; }
+    public string[] Roles { get; } = new string[1] { "admin" };
+
+    public class DeleteUserOperationClaimCommandHandler : IRequestHandler<DeleteUserOperationClaimCommand>
     {
-        public int Id { get; set; }
-        public string[] Roles { get; } = new string[1] { "admin" };
+        private readonly IUserOperationClaimRepository _userOperationClaimRepository;
+        private readonly UserOperationClaimBusinessRules _userOperationClaimBusinessRules;
 
-        public class DeleteUserOperationClaimCommandHandler : IRequestHandler<DeleteUserOperationClaimCommand>
+        public DeleteUserOperationClaimCommandHandler(IUserOperationClaimRepository userOperationClaimRepository, UserOperationClaimBusinessRules userOperationClaimBusinessRules)
         {
-            private readonly IUserOperationClaimRepository _userOperationClaimRepository;
-            private readonly UserOperationClaimBusinessRules _userOperationClaimBusinessRules;
+            _userOperationClaimRepository = userOperationClaimRepository;
+            _userOperationClaimBusinessRules = userOperationClaimBusinessRules;
+        }
 
-            public DeleteUserOperationClaimCommandHandler(IUserOperationClaimRepository userOperationClaimRepository, UserOperationClaimBusinessRules userOperationClaimBusinessRules)
-            {
-                _userOperationClaimRepository = userOperationClaimRepository;
-                _userOperationClaimBusinessRules = userOperationClaimBusinessRules;
-            }
+        public async Task<Unit> Handle(DeleteUserOperationClaimCommand request, CancellationToken cancellationToken)
+        {
+            UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(u => u.Id == request.Id);
 
-            public async Task<Unit> Handle(DeleteUserOperationClaimCommand request, CancellationToken cancellationToken)
-            {
-                UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(u => u.Id == request.Id);
+            _userOperationClaimBusinessRules.UserOperationClaimShouldExistWhenRequested(userOperationClaim);
 
-                _userOperationClaimBusinessRules.UserOperationClaimShouldExistWhenRequested(userOperationClaim);
+            await _userOperationClaimRepository.DeleteAsync(userOperationClaim!);
 
-                await _userOperationClaimRepository.DeleteAsync(userOperationClaim!);
-
-                return Unit.Value;
-            }
+            return Unit.Value;
         }
     }
 }

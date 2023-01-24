@@ -1,8 +1,7 @@
-﻿namespace Application.Features.ProgrammingLanguages.Constants
+﻿namespace Application.Features.ProgrammingLanguages.Constants;
+
+public class ProgrammingLanguageMessages
 {
-    public class ProgrammingLanguageMessages
-    {
-        public const string ProgrammingLanguageNameIsAlreadyExist = "Programming language name is already exist";
-        public const string ProgrammingLanguageNameDoesNotExist = "Requested programming language does not exist";
-    }
+    public const string ProgrammingLanguageNameIsAlreadyExist = "Programming language name is already exist";
+    public const string ProgrammingLanguageNameDoesNotExist = "Requested programming language does not exist";
 }

@@ -4,32 +4,31 @@ using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
 using Domain.Entities;
 
-namespace Application.Features.ProgrammingLanguages.Rules
+namespace Application.Features.ProgrammingLanguages.Rules;
+
+public class ProgrammingLanguageBusinessRules
 {
-    public class ProgrammingLanguageBusinessRules
+    private readonly IProgrammingLanguageRepository _programmingLanguageRepository;
+
+    public ProgrammingLanguageBusinessRules(IProgrammingLanguageRepository programmingLanguageRepository)
     {
-        private readonly IProgrammingLanguageRepository _programmingLanguageRepository;
+        _programmingLanguageRepository = programmingLanguageRepository;
+    }
 
-        public ProgrammingLanguageBusinessRules(IProgrammingLanguageRepository programmingLanguageRepository)
-        {
-            _programmingLanguageRepository = programmingLanguageRepository;
-        }
+    public async Task ProgrammingLanguageNameCanNotBeDuplicatedWhenInserting(string name)
+    {
+        IPaginate<ProgrammingLanguage> result = await _programmingLanguageRepository.GetListAsync(p => p.Name == name);
+        if (result.Items.Any()) throw new BusinessException(ProgrammingLanguageMessages.ProgrammingLanguageNameIsAlreadyExist);
+    }
 
-        public async Task ProgrammingLanguageNameCanNotBeDuplicatedWhenInserting(string name)
-        {
-            IPaginate<ProgrammingLanguage> result = await _programmingLanguageRepository.GetListAsync(p => p.Name == name);
-            if (result.Items.Any()) throw new BusinessException(ProgrammingLanguageMessages.ProgrammingLanguageNameIsAlreadyExist);
-        }
+    public void ProgrammingLanguageShouldExist(ProgrammingLanguage programmingLanguage)
+    {
+        if (programmingLanguage == null) throw new BusinessException(ProgrammingLanguageMessages.ProgrammingLanguageNameDoesNotExist);
+    }
 
-        public void ProgrammingLanguageShouldExist(ProgrammingLanguage programmingLanguage)
-        {
-            if (programmingLanguage == null) throw new BusinessException(ProgrammingLanguageMessages.ProgrammingLanguageNameDoesNotExist);
-        }
-
-        public async Task ProgrammingLanguageNameCanNotBeDuplicatedWhenUpdating(int id, string name)
-        {
-            IPaginate<ProgrammingLanguage> result = await _programmingLanguageRepository.GetListAsync(p => p.Id != id && p.Name == name);
-            if (result.Items.Any()) throw new BusinessException(ProgrammingLanguageMessages.ProgrammingLanguageNameIsAlreadyExist);
-        }
+    public async Task ProgrammingLanguageNameCanNotBeDuplicatedWhenUpdating(int id, string name)
+    {
+        IPaginate<ProgrammingLanguage> result = await _programmingLanguageRepository.GetListAsync(p => p.Id != id && p.Name == name);
+        if (result.Items.Any()) throw new BusinessException(ProgrammingLanguageMessages.ProgrammingLanguageNameIsAlreadyExist);
     }
 }

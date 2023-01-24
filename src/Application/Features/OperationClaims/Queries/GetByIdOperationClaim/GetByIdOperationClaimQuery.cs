@@ -6,34 +6,33 @@ using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using MediatR;
 
-namespace Application.Features.OperationClaims.Queries.GetByIdOperationClaim
+namespace Application.Features.OperationClaims.Queries.GetByIdOperationClaim;
+
+public class GetByIdOperationClaimQuery : IRequest<OperationClaimGetByIdDto>, ISecuredRequest
 {
-    public class GetByIdOperationClaimQuery : IRequest<OperationClaimGetByIdDto>, ISecuredRequest
+    public int Id { get; set; }
+    public string[] Roles { get; } = new string[1] { "admin" };
+    public class GetByIdOperationClaimQueryHandler : IRequestHandler<GetByIdOperationClaimQuery, OperationClaimGetByIdDto>
     {
-        public int Id { get; set; }
-        public string[] Roles { get; } = new string[1] { "admin" };
-        public class GetByIdOperationClaimQueryHandler : IRequestHandler<GetByIdOperationClaimQuery, OperationClaimGetByIdDto>
+        private readonly IOperationClaimRepository _operationClaimRepository;
+        private readonly IMapper _mapper;
+        private readonly OperationClaimBusinessRules _operationClaimBusinessRules;
+
+        public GetByIdOperationClaimQueryHandler(IOperationClaimRepository operationClaimRepository, IMapper mapper, OperationClaimBusinessRules operationClaimBusinessRules)
         {
-            private readonly IOperationClaimRepository _operationClaimRepository;
-            private readonly IMapper _mapper;
-            private readonly OperationClaimBusinessRules _operationClaimBusinessRules;
+            _operationClaimRepository = operationClaimRepository;
+            _mapper = mapper;
+            _operationClaimBusinessRules = operationClaimBusinessRules;
+        }
+        public async Task<OperationClaimGetByIdDto> Handle(GetByIdOperationClaimQuery request, CancellationToken cancellationToken)
+        {
+            OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(o => o.Id == request.Id);
 
-            public GetByIdOperationClaimQueryHandler(IOperationClaimRepository operationClaimRepository, IMapper mapper, OperationClaimBusinessRules operationClaimBusinessRules)
-            {
-                _operationClaimRepository = operationClaimRepository;
-                _mapper = mapper;
-                _operationClaimBusinessRules = operationClaimBusinessRules;
-            }
-            public async Task<OperationClaimGetByIdDto> Handle(GetByIdOperationClaimQuery request, CancellationToken cancellationToken)
-            {
-                OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(o => o.Id == request.Id);
+            _operationClaimBusinessRules.OperationClaimShouldExistWhenRequested(operationClaim!);
 
-                _operationClaimBusinessRules.OperationClaimShouldExistWhenRequested(operationClaim!);
+            OperationClaimGetByIdDto operationClaimGetByIdDto = _mapper.Map<OperationClaimGetByIdDto>(operationClaim);
 
-                OperationClaimGetByIdDto operationClaimGetByIdDto = _mapper.Map<OperationClaimGetByIdDto>(operationClaim);
-
-                return operationClaimGetByIdDto;
-            }
+            return operationClaimGetByIdDto;
         }
     }
 }

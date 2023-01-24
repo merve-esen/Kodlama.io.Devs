@@ -4,33 +4,32 @@ using AutoMapper;
 using Domain.Entities;
 using MediatR;
 
-namespace Application.Features.Technologies.Commands.UpdateTechnology
+namespace Application.Features.Technologies.Commands.UpdateTechnology;
+
+public class UpdateTechnologyCommand : IRequest<UpdatedTechnologyDto>
 {
-    public class UpdateTechnologyCommand : IRequest<UpdatedTechnologyDto>
+    public int Id { get; set; }
+    public int ProgrammingLanguageId { get; set; }
+    public string Name { get; set; }
+
+    public class UpdateTechnologyCommandHandler : IRequestHandler<UpdateTechnologyCommand, UpdatedTechnologyDto>
     {
-        public int Id { get; set; }
-        public int ProgrammingLanguageId { get; set; }
-        public string Name { get; set; }
+        private readonly IMapper _mapper;
+        private readonly ITechnologyRepository _technologyRepository;
 
-        public class UpdateTechnologyCommandHandler : IRequestHandler<UpdateTechnologyCommand, UpdatedTechnologyDto>
+        public UpdateTechnologyCommandHandler(IMapper mapper, ITechnologyRepository technologyRepository)
         {
-            private readonly IMapper _mapper;
-            private readonly ITechnologyRepository _technologyRepository;
+            _mapper = mapper;
+            _technologyRepository = technologyRepository;
+        }
 
-            public UpdateTechnologyCommandHandler(IMapper mapper, ITechnologyRepository technologyRepository)
-            {
-                _mapper = mapper;
-                _technologyRepository = technologyRepository;
-            }
+        public async Task<UpdatedTechnologyDto> Handle(UpdateTechnologyCommand request, CancellationToken cancellationToken)
+        {
+            Technology technology = await _technologyRepository.GetAsync(t => t.Id == request.Id);
+            var updatedTechnology = await _technologyRepository.UpdateAsync(_mapper.Map(request, technology!));
+            UpdatedTechnologyDto updatedTechnologyDto = _mapper.Map<UpdatedTechnologyDto>(updatedTechnology);
 
-            public async Task<UpdatedTechnologyDto> Handle(UpdateTechnologyCommand request, CancellationToken cancellationToken)
-            {
-                Technology technology = await _technologyRepository.GetAsync(t => t.Id == request.Id);
-                var updatedTechnology = await _technologyRepository.UpdateAsync(_mapper.Map(request, technology!));
-                UpdatedTechnologyDto updatedTechnologyDto = _mapper.Map<UpdatedTechnologyDto>(updatedTechnology);
-
-                return updatedTechnologyDto;
-            }
+            return updatedTechnologyDto;
         }
     }
 }

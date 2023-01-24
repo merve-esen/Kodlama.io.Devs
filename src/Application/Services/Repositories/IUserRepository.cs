@@ -1,9 +1,8 @@
 ﻿using Core.Persistence.Repositories;
 using Core.Security.Entities;
 
-namespace Application.Services.Repositories
+namespace Application.Services.Repositories;
+
+public interface IUserRepository : IAsyncRepository<User>, IRepository<User>
 {
-    public interface IUserRepository : IAsyncRepository<User>, IRepository<User>
-    {
-    }
 }

@@ -1,8 +1,7 @@
-﻿namespace Application.Features.OperationClaims.Dtos
+﻿namespace Application.Features.OperationClaims.Dtos;
+
+public class CreatedOperationClaimDto
 {
-    public class CreatedOperationClaimDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
+    public int Id { get; set; }
+    public string Name { get; set; }
 }

@@ -3,12 +3,11 @@ using Core.Persistence.Repositories;
 using Core.Security.Entities;
 using Persistence.Contexts;
 
-namespace Persistence.Repositories
+namespace Persistence.Repositories;
+
+public class UserRepository : EfRepositoryBase<User, BaseDbContext>, IUserRepository
 {
-    public class UserRepository : EfRepositoryBase<User, BaseDbContext>, IUserRepository
+    public UserRepository(BaseDbContext context) : base(context)
     {
-        public UserRepository(BaseDbContext context) : base(context)
-        {
-        }
     }
 }

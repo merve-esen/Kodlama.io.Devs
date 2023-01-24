@@ -1,7 +1,6 @@
-﻿namespace Application.Features.Auth.Dtos
-{
-    public class RegisteredDto : RefreshedTokenDto
-    {
+﻿namespace Application.Features.Auth.Dtos;
 
-    }
+public class RegisteredDto : RefreshedTokenDto
+{
+
 }

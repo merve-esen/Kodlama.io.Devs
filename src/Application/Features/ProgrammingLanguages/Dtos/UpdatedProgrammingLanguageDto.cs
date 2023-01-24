@@ -1,8 +1,7 @@
-﻿namespace Application.Features.ProgrammingLanguages.Dtos
+﻿namespace Application.Features.ProgrammingLanguages.Dtos;
+
+public class UpdatedProgrammingLanguageDto
 {
-    public class UpdatedProgrammingLanguageDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
+    public int Id { get; set; }
+    public string Name { get; set; }
 }

@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.OperationClaims.Commands.CreateOperationClaim
+namespace Application.Features.OperationClaims.Commands.CreateOperationClaim;
+
+public class CreateOperationClaimCommandValidator : AbstractValidator<CreateOperationClaimCommand>
 {
-    public class CreateOperationClaimCommandValidator : AbstractValidator<CreateOperationClaimCommand>
+    public CreateOperationClaimCommandValidator()
     {
-        public CreateOperationClaimCommandValidator()
-        {
-            RuleFor(c => c.Name).MinimumLength(2).NotEmpty().NotNull();
-        }
+        RuleFor(c => c.Name).MinimumLength(2).NotEmpty().NotNull();
     }
 }

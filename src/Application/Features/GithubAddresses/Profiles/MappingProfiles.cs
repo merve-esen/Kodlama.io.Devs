@@ -6,20 +6,19 @@ using AutoMapper;
 using Core.Persistence.Paging;
 using Domain.Entities;
 
-namespace Application.Features.GithubAddresses.Profiles
+namespace Application.Features.GithubAddresses.Profiles;
+
+public class MappingProfiles : Profile
 {
-    public class MappingProfiles : Profile
+    public MappingProfiles()
     {
-        public MappingProfiles()
-        {
-            CreateMap<GithubAddress, CreatedGithubAddressDto>().ReverseMap();
-            CreateMap<GithubAddress, CreateGithubAddressCommand>().ReverseMap();
-            CreateMap<GithubAddress, DeletedGithubAddressDto>().ReverseMap();
-            CreateMap<GithubAddress, UpdatedGithubAddressDto>().ReverseMap();
-            CreateMap<GithubAddress, UpdateGithubAddressCommand>().ReverseMap();
-            CreateMap<GithubAddress, GithubAddressListDto>().ReverseMap();
-            CreateMap<IPaginate<GithubAddress>, GithubAddressListModel>().ReverseMap();
-            CreateMap<GithubAddress, GithubAddressGetByUserIdDto>().ReverseMap();
-        }
+        CreateMap<GithubAddress, CreatedGithubAddressDto>().ReverseMap();
+        CreateMap<GithubAddress, CreateGithubAddressCommand>().ReverseMap();
+        CreateMap<GithubAddress, DeletedGithubAddressDto>().ReverseMap();
+        CreateMap<GithubAddress, UpdatedGithubAddressDto>().ReverseMap();
+        CreateMap<GithubAddress, UpdateGithubAddressCommand>().ReverseMap();
+        CreateMap<GithubAddress, GithubAddressListDto>().ReverseMap();
+        CreateMap<IPaginate<GithubAddress>, GithubAddressListModel>().ReverseMap();
+        CreateMap<GithubAddress, GithubAddressGetByUserIdDto>().ReverseMap();
     }
 }

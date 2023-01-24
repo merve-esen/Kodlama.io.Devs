@@ -7,20 +7,19 @@ using AutoMapper;
 using Core.Persistence.Paging;
 using Domain.Entities;
 
-namespace Application.Features.Technologies.Profiles
+namespace Application.Features.Technologies.Profiles;
+
+public class MappingProfiles : Profile
 {
-    public class MappingProfiles : Profile
+    public MappingProfiles()
     {
-        public MappingProfiles()
-        {
-            CreateMap<Technology, CreatedTechnologyDto>().ReverseMap();
-            CreateMap<Technology, CreateTechnologyCommand>().ReverseMap();
-            CreateMap<Technology, UpdatedTechnologyDto>().ReverseMap();
-            CreateMap<Technology, UpdateTechnologyCommand>().ReverseMap();
-            CreateMap<Technology, DeleteTechnologyCommand>().ReverseMap();
-            CreateMap<Technology, DeletedTechnologyDto>().ReverseMap();
-            CreateMap<IPaginate<Technology>, TechnologyListModel>().ReverseMap();
-            CreateMap<Technology, TechnologyListDto>().ReverseMap();
-        }
+        CreateMap<Technology, CreatedTechnologyDto>().ReverseMap();
+        CreateMap<Technology, CreateTechnologyCommand>().ReverseMap();
+        CreateMap<Technology, UpdatedTechnologyDto>().ReverseMap();
+        CreateMap<Technology, UpdateTechnologyCommand>().ReverseMap();
+        CreateMap<Technology, DeleteTechnologyCommand>().ReverseMap();
+        CreateMap<Technology, DeletedTechnologyDto>().ReverseMap();
+        CreateMap<IPaginate<Technology>, TechnologyListModel>().ReverseMap();
+        CreateMap<Technology, TechnologyListDto>().ReverseMap();
     }
 }

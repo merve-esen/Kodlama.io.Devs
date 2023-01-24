@@ -3,26 +3,25 @@ using Application.Services.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Security.Entities;
 
-namespace Application.Features.OperationClaims.Rules
+namespace Application.Features.OperationClaims.Rules;
+
+public class OperationClaimBusinessRules
 {
-    public class OperationClaimBusinessRules
+    private readonly IOperationClaimRepository _operationClaimRepository;
+
+    public OperationClaimBusinessRules(IOperationClaimRepository operationClaimRepository)
     {
-        private readonly IOperationClaimRepository _operationClaimRepository;
+        _operationClaimRepository = operationClaimRepository;
+    }
 
-        public OperationClaimBusinessRules(IOperationClaimRepository operationClaimRepository)
-        {
-            _operationClaimRepository = operationClaimRepository;
-        }
+    public async Task OperationClaimCanNotBeDuplicatedWhenInserted(string name)
+    {
+        OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(o => o.Name == name);
+        if (operationClaim != null) throw new BusinessException(OperationClaimMessages.OperationClaimIsAlreadyExist);
+    }
 
-        public async Task OperationClaimCanNotBeDuplicatedWhenInserted(string name)
-        {
-            OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(o => o.Name == name);
-            if (operationClaim != null) throw new BusinessException(OperationClaimMessages.OperationClaimIsAlreadyExist);
-        }
-
-        public void OperationClaimShouldExistWhenRequested(OperationClaim operationClaim)
-        {
-            if (operationClaim == null) throw new BusinessException(OperationClaimMessages.OperationClaimDoesNotExist);
-        }
+    public void OperationClaimShouldExistWhenRequested(OperationClaim operationClaim)
+    {
+        if (operationClaim == null) throw new BusinessException(OperationClaimMessages.OperationClaimDoesNotExist);
     }
 }

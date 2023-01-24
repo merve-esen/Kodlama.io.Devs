@@ -3,12 +3,11 @@ using Core.Persistence.Repositories;
 using Domain.Entities;
 using Persistence.Contexts;
 
-namespace Persistence.Repositories
+namespace Persistence.Repositories;
+
+public class TechnologyRepository : EfRepositoryBase<Technology, BaseDbContext>, ITechnologyRepository
 {
-    public class TechnologyRepository : EfRepositoryBase<Technology, BaseDbContext>, ITechnologyRepository
+    public TechnologyRepository(BaseDbContext context) : base(context)
     {
-        public TechnologyRepository(BaseDbContext context) : base(context)
-        {
-        }
     }
 }

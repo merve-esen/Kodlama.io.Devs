@@ -1,10 +1,9 @@
 ﻿using Core.Persistence.Repositories;
 using Domain.Entities;
 
-namespace Application.Services.Repositories
-{
-    public interface IGithubAddressRepository : IAsyncRepository<GithubAddress>, IRepository<GithubAddress>
-    {
+namespace Application.Services.Repositories;
 
-    }
+public interface IGithubAddressRepository : IAsyncRepository<GithubAddress>, IRepository<GithubAddress>
+{
+
 }

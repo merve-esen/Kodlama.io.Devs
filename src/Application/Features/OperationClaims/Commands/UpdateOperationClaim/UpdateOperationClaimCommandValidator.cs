@@ -1,13 +1,12 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.OperationClaims.Commands.UpdateOperationClaim
+namespace Application.Features.OperationClaims.Commands.UpdateOperationClaim;
+
+public class UpdateOperationClaimCommandValidator : AbstractValidator<UpdateOperationClaimCommand>
 {
-    public class UpdateOperationClaimCommandValidator : AbstractValidator<UpdateOperationClaimCommand>
+    public UpdateOperationClaimCommandValidator()
     {
-        public UpdateOperationClaimCommandValidator()
-        {
-            RuleFor(o => o.Id).NotNull().GreaterThanOrEqualTo(0);
-            RuleFor(o => o.Name).NotEmpty();
-        }
+        RuleFor(o => o.Id).NotNull().GreaterThanOrEqualTo(0);
+        RuleFor(o => o.Name).NotEmpty();
     }
 }

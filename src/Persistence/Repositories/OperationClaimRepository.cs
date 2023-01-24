@@ -3,12 +3,11 @@ using Core.Persistence.Repositories;
 using Core.Security.Entities;
 using Persistence.Contexts;
 
-namespace Persistence.Repositories
+namespace Persistence.Repositories;
+
+public class OperationClaimRepository : EfRepositoryBase<OperationClaim, BaseDbContext>, IOperationClaimRepository
 {
-    public class OperationClaimRepository : EfRepositoryBase<OperationClaim, BaseDbContext>, IOperationClaimRepository
+    public OperationClaimRepository(BaseDbContext context) : base(context)
     {
-        public OperationClaimRepository(BaseDbContext context) : base(context)
-        {
-        }
     }
 }

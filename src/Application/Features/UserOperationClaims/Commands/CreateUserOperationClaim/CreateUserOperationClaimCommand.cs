@@ -6,39 +6,38 @@ using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using MediatR;
 
-namespace Application.Features.UserOperationClaims.Commands.CreateUserOperationClaim
+namespace Application.Features.UserOperationClaims.Commands.CreateUserOperationClaim;
+
+public class CreateUserOperationClaimCommand : IRequest<CreatedUserOperationClaimDto>, ISecuredRequest
 {
-    public class CreateUserOperationClaimCommand : IRequest<CreatedUserOperationClaimDto>, ISecuredRequest
+    public int UserId { get; set; }
+    public int OperationClaimId { get; set; }
+    public string[] Roles { get; } = new string[1] { "admin" };
+
+    public class CreateUserOperationClaimCommandHandler : IRequestHandler<CreateUserOperationClaimCommand, CreatedUserOperationClaimDto>
     {
-        public int UserId { get; set; }
-        public int OperationClaimId { get; set; }
-        public string[] Roles { get; } = new string[1] { "admin" };
+        private readonly IUserOperationClaimRepository _userOperationClaimRepository;
+        private readonly IMapper _mapper;
+        private readonly UserOperationClaimBusinessRules _userOperationClaimBusinessRules;
 
-        public class CreateUserOperationClaimCommandHandler : IRequestHandler<CreateUserOperationClaimCommand, CreatedUserOperationClaimDto>
+        public CreateUserOperationClaimCommandHandler(IUserOperationClaimRepository userOperationClaimRepository, IMapper mapper, UserOperationClaimBusinessRules userOperationClaimBusinessRules)
         {
-            private readonly IUserOperationClaimRepository _userOperationClaimRepository;
-            private readonly IMapper _mapper;
-            private readonly UserOperationClaimBusinessRules _userOperationClaimBusinessRules;
+            _userOperationClaimRepository = userOperationClaimRepository;
+            _mapper = mapper;
+            _userOperationClaimBusinessRules = userOperationClaimBusinessRules;
+        }
 
-            public CreateUserOperationClaimCommandHandler(IUserOperationClaimRepository userOperationClaimRepository, IMapper mapper, UserOperationClaimBusinessRules userOperationClaimBusinessRules)
-            {
-                _userOperationClaimRepository = userOperationClaimRepository;
-                _mapper = mapper;
-                _userOperationClaimBusinessRules = userOperationClaimBusinessRules;
-            }
+        public async Task<CreatedUserOperationClaimDto> Handle(CreateUserOperationClaimCommand request, CancellationToken cancellationToken)
+        {
+            await _userOperationClaimBusinessRules.UserOperationClaimCanNotBeDuplicatedWhenInserted(request.UserId, request.OperationClaimId);
 
-            public async Task<CreatedUserOperationClaimDto> Handle(CreateUserOperationClaimCommand request, CancellationToken cancellationToken)
-            {
-                await _userOperationClaimBusinessRules.UserOperationClaimCanNotBeDuplicatedWhenInserted(request.UserId, request.OperationClaimId);
+            UserOperationClaim userOperationClaim = _mapper.Map<UserOperationClaim>(request);
 
-                UserOperationClaim userOperationClaim = _mapper.Map<UserOperationClaim>(request);
+            UserOperationClaim createdUserOperationClaim = await _userOperationClaimRepository.AddAsync(userOperationClaim);
 
-                UserOperationClaim createdUserOperationClaim = await _userOperationClaimRepository.AddAsync(userOperationClaim);
+            CreatedUserOperationClaimDto createdUserOperationClaimDto = _mapper.Map<CreatedUserOperationClaimDto>(createdUserOperationClaim);
 
-                CreatedUserOperationClaimDto createdUserOperationClaimDto = _mapper.Map<CreatedUserOperationClaimDto>(createdUserOperationClaim);
-
-                return createdUserOperationClaimDto;
-            }
+            return createdUserOperationClaimDto;
         }
     }
 }

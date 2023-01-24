@@ -7,21 +7,20 @@ using AutoMapper;
 using Core.Persistence.Paging;
 using Core.Security.Entities;
 
-namespace Application.Features.OperationClaims.Profiles
+namespace Application.Features.OperationClaims.Profiles;
+
+public class MappingProfiles : Profile
 {
-    public class MappingProfiles : Profile
+    public MappingProfiles()
     {
-        public MappingProfiles()
-        {
-            CreateMap<OperationClaim, CreateOperationClaimCommand>().ReverseMap();
-            CreateMap<OperationClaim, CreatedOperationClaimDto>().ReverseMap();
-            CreateMap<OperationClaim, UpdateOperationClaimCommand>().ReverseMap();
-            CreateMap<OperationClaim, UpdatedOperationClaimDto>().ReverseMap();
-            CreateMap<OperationClaim, DeleteOperationClaimCommand>().ReverseMap();
-            CreateMap<OperationClaim, DeletedOperationClaimDto>().ReverseMap();
-            CreateMap<OperationClaim, OperationClaimGetByIdDto>().ReverseMap();
-            CreateMap<OperationClaim, OperationClaimListDto>().ReverseMap();
-            CreateMap<IPaginate<OperationClaim>, OperationClaimListModel>().ReverseMap();
-        }
+        CreateMap<OperationClaim, CreateOperationClaimCommand>().ReverseMap();
+        CreateMap<OperationClaim, CreatedOperationClaimDto>().ReverseMap();
+        CreateMap<OperationClaim, UpdateOperationClaimCommand>().ReverseMap();
+        CreateMap<OperationClaim, UpdatedOperationClaimDto>().ReverseMap();
+        CreateMap<OperationClaim, DeleteOperationClaimCommand>().ReverseMap();
+        CreateMap<OperationClaim, DeletedOperationClaimDto>().ReverseMap();
+        CreateMap<OperationClaim, OperationClaimGetByIdDto>().ReverseMap();
+        CreateMap<OperationClaim, OperationClaimListDto>().ReverseMap();
+        CreateMap<IPaginate<OperationClaim>, OperationClaimListModel>().ReverseMap();
     }
 }

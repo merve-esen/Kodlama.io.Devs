@@ -1,9 +1,8 @@
-﻿namespace Application.Features.GithubAddresses.Dtos
+﻿namespace Application.Features.GithubAddresses.Dtos;
+
+public class GithubAddressGetByUserIdDto
 {
-    public class GithubAddressGetByUserIdDto
-    {
-        public int Id { get; set; }
-        public int UserId { get; set; }
-        public string Name { get; set; }
-    }
+    public int Id { get; set; }
+    public int UserId { get; set; }
+    public string Name { get; set; }
 }

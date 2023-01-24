@@ -3,12 +3,11 @@ using Core.Persistence.Repositories;
 using Domain.Entities;
 using Persistence.Contexts;
 
-namespace Persistence.Repositories
+namespace Persistence.Repositories;
+
+public class GithubAddressRepository : EfRepositoryBase<GithubAddress, BaseDbContext>, IGithubAddressRepository
 {
-    public class GithubAddressRepository : EfRepositoryBase<GithubAddress, BaseDbContext>, IGithubAddressRepository
+    public GithubAddressRepository(BaseDbContext context) : base(context)
     {
-        public GithubAddressRepository(BaseDbContext context) : base(context)
-        {
-        }
     }
 }

@@ -1,6 +1,5 @@
-﻿namespace Application.Features.Technologies.Rules
+﻿namespace Application.Features.Technologies.Rules;
+
+public class TechnologyBusinessRules
 {
-    public class TechnologyBusinessRules
-    {
-    }
 }

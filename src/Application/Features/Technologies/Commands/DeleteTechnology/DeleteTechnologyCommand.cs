@@ -4,29 +4,28 @@ using AutoMapper;
 using Domain.Entities;
 using MediatR;
 
-namespace Application.Features.Technologies.Commands.DeleteTechnology
+namespace Application.Features.Technologies.Commands.DeleteTechnology;
+
+public class DeleteTechnologyCommand : IRequest<DeletedTechnologyDto>
 {
-    public class DeleteTechnologyCommand : IRequest<DeletedTechnologyDto>
+    public int Id { get; set; }
+
+    public class DeleteTechnologyCommandHandler : IRequestHandler<DeleteTechnologyCommand, DeletedTechnologyDto>
     {
-        public int Id { get; set; }
-
-        public class DeleteTechnologyCommandHandler : IRequestHandler<DeleteTechnologyCommand, DeletedTechnologyDto>
+        private readonly IMapper _mapper;
+        private readonly ITechnologyRepository _technologyRepository;
+        public DeleteTechnologyCommandHandler(ITechnologyRepository technologyRepository, IMapper mapper)
         {
-            private readonly IMapper _mapper;
-            private readonly ITechnologyRepository _technologyRepository;
-            public DeleteTechnologyCommandHandler(ITechnologyRepository technologyRepository, IMapper mapper)
-            {
-                _technologyRepository = technologyRepository;
-                _mapper = mapper;
-            }
+            _technologyRepository = technologyRepository;
+            _mapper = mapper;
+        }
 
-            public async Task<DeletedTechnologyDto> Handle(DeleteTechnologyCommand request, CancellationToken cancellationToken)
-            {
-                Technology technology = await _technologyRepository.GetAsync(t => t.Id == request.Id);
-                Technology deletedTechnology = await _technologyRepository.DeleteAsync(_mapper.Map(request, technology));
+        public async Task<DeletedTechnologyDto> Handle(DeleteTechnologyCommand request, CancellationToken cancellationToken)
+        {
+            Technology technology = await _technologyRepository.GetAsync(t => t.Id == request.Id);
+            Technology deletedTechnology = await _technologyRepository.DeleteAsync(_mapper.Map(request, technology));
 
-                return _mapper.Map<DeletedTechnologyDto>(deletedTechnology);
-            }
+            return _mapper.Map<DeletedTechnologyDto>(deletedTechnology);
         }
     }
 }
