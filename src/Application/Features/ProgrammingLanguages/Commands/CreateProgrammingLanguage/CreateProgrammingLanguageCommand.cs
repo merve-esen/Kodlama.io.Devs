@@ -17,12 +17,15 @@ public partial class CreateProgrammingLanguageCommand : IRequest<CreatedProgramm
         private readonly IMapper _mapper;
         private readonly ProgrammingLanguageBusinessRules _programmingLanguageBusinessRules;
 
-        public CreateProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper, ProgrammingLanguageBusinessRules programmingLanguageBusinessRules)
+        /*public CreateProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper, ProgrammingLanguageBusinessRules programmingLanguageBusinessRules)
         {
             _programmingLanguageRepository = programmingLanguageRepository;
             _mapper = mapper;
             _programmingLanguageBusinessRules = programmingLanguageBusinessRules;
-        }
+        }*/
+
+        public CreateProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper, ProgrammingLanguageBusinessRules programmingLanguageBusinessRules)
+            => (_programmingLanguageRepository, _mapper, _programmingLanguageBusinessRules) = (programmingLanguageRepository, mapper, programmingLanguageBusinessRules);
 
         public async Task<CreatedProgrammingLanguageDto> Handle(CreateProgrammingLanguageCommand request, CancellationToken cancellationToken)
         {
