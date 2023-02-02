@@ -18,12 +18,15 @@ public partial class UpdateProgrammingLanguageCommand : IRequest<UpdatedProgramm
         private readonly IMapper _mapper;
         private readonly ProgrammingLanguageBusinessRules _programmingLanguageBusinessRules;
 
-        public UpdateProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper, ProgrammingLanguageBusinessRules programmingLanguageBusinessRules)
+        /*public UpdateProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper, ProgrammingLanguageBusinessRules programmingLanguageBusinessRules)
         {
             _programmingLanguageRepository = programmingLanguageRepository;
             _mapper = mapper;
             _programmingLanguageBusinessRules = programmingLanguageBusinessRules;
-        }
+        }*/
+
+        public UpdateProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper, ProgrammingLanguageBusinessRules programmingLanguageBusinessRules)
+           => (_programmingLanguageRepository, _mapper, _programmingLanguageBusinessRules) = (programmingLanguageRepository, mapper, programmingLanguageBusinessRules);
 
         public async Task<UpdatedProgrammingLanguageDto> Handle(UpdateProgrammingLanguageCommand request, CancellationToken cancellationToken)
         {
