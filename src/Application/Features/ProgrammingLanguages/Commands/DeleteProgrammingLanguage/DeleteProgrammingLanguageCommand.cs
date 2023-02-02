@@ -17,12 +17,15 @@ public partial class DeleteProgrammingLanguageCommand : IRequest<DeletedProgramm
         private readonly IMapper _mapper;
         private readonly ProgrammingLanguageBusinessRules _programmingLanguageBusinessRules;
 
-        public DeleteProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper, ProgrammingLanguageBusinessRules programmingLanguageBusinessRules)
+        /*public DeleteProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper, ProgrammingLanguageBusinessRules programmingLanguageBusinessRules)
         {
             _programmingLanguageRepository = programmingLanguageRepository;
             _mapper = mapper;
             _programmingLanguageBusinessRules = programmingLanguageBusinessRules;
-        }
+        }*/
+
+        public DeleteProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper, ProgrammingLanguageBusinessRules programmingLanguageBusinessRules)
+            => (_programmingLanguageRepository, _mapper, _programmingLanguageBusinessRules) = (programmingLanguageRepository, mapper, programmingLanguageBusinessRules);
 
         public async Task<DeletedProgrammingLanguageDto> Handle(DeleteProgrammingLanguageCommand request, CancellationToken cancellationToken)
         {
