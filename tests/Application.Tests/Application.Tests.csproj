@@ -32,7 +32,8 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <Folder Include="Features\" />
+    <Folder Include="Features\Users\Commands\" />
+    <Folder Include="Features\Users\Queries\" />
     <Folder Include="Mocks\FakeData\" />
     <Folder Include="Mocks\Repositories\" />
   </ItemGroup>
