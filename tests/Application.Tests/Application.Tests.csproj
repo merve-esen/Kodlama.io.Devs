@@ -25,5 +25,16 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-
+	
+  <ItemGroup>
+	  <ProjectReference Include="..\..\src\corePackages\Core.Test\Core.Test.csproj" />
+	  <ProjectReference Include="..\..\src\Persistence\Persistence.csproj" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="Features\" />
+    <Folder Include="Mocks\FakeData\" />
+    <Folder Include="Mocks\Repositories\" />
+  </ItemGroup>
+	
 </Project>
