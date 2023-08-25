@@ -32,8 +32,11 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <Folder Include="Features\Users\Commands\" />
-    <Folder Include="Features\Users\Queries\" />
+    <Folder Include="Features\Users\Commands\Create\" />
+    <Folder Include="Features\Users\Commands\Delete\" />
+    <Folder Include="Features\Users\Commands\Update\" />
+    <Folder Include="Features\Users\Queries\GetById\" />
+    <Folder Include="Features\Users\Queries\GetList\" />
     <Folder Include="Mocks\FakeData\" />
     <Folder Include="Mocks\Repositories\" />
   </ItemGroup>
