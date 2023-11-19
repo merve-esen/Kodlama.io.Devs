@@ -3,7 +3,7 @@ using Core.Security.Entities;
 
 namespace Domain.Entities;
 
-public class GithubAddress : Entity
+public class GithubAddress : Entity<int>
 {
     public int UserId { get; set; }
     public string Name { get; set; }
