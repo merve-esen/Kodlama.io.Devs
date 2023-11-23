@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public class Technology : Entity
+public class Technology : Entity<int>
 {
     public int ProgrammingLanguageId { get; set; }
     public string Name { get; set; }
