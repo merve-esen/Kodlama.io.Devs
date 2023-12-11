@@ -3,7 +3,7 @@ using Domain.Entities;
 
 namespace Application.Services.Repositories;
 
-public interface ITechnologyRepository : IAsyncRepository<Technology>, IRepository<Technology>
+public interface ITechnologyRepository : IAsyncRepository<Technology, int>, IRepository<Technology, int>
 {
 
 }
