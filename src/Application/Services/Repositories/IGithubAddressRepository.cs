@@ -3,7 +3,7 @@ using Domain.Entities;
 
 namespace Application.Services.Repositories;
 
-public interface IGithubAddressRepository : IAsyncRepository<GithubAddress>, IRepository<GithubAddress>
+public interface IGithubAddressRepository : IAsyncRepository<GithubAddress, int>, IRepository<GithubAddress, int>
 {
 
 }
