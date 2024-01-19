@@ -10,8 +10,10 @@ public class UserOperationClaim : Entity<int>
     public virtual User User { get; set; }
     public virtual OperationClaim OperationClaim { get; set; }
 
-    public UserOperationClaim()
+    public UserOperationClaim(int userId, int operationClaimId)
     {
+        UserId = userId;
+        OperationClaimId = operationClaimId;
     }
 
     public UserOperationClaim(int id, int userId, int operationClaimId) : base(id)
