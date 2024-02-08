@@ -11,6 +11,13 @@ namespace WebAPI.Controllers;
 [ApiController]
 public class UserOperationClaimsController : BaseController
 {
+    [HttpGet("{Id}")]
+    public async Task<IActionResult> GetById([FromRoute] GetByIdUserOperationClaimQuery getByIdUserOperationClaimQuery)
+    {
+        GetByIdUserOperationClaimResponse result = await Mediator.Send(getByIdUserOperationClaimQuery);
+        return Ok(result);
+    }
+
     [HttpPost("GetByUserId")]
     public async Task<IActionResult> GetByUserId([FromBody] GetByUserIdUserOperationClaimQuery getByUserIdQuery)
     {
