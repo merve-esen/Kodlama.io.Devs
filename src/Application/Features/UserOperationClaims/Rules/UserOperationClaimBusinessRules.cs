@@ -24,4 +24,10 @@ public class UserOperationClaimBusinessRules
     {
         if (userOperationClaim == null) throw new BusinessException(UserOperationClaimMessages.UserOperationClaimDoesNotExist);
     }
+
+    public async Task UserOperationClaimShouldExistWhenSelected(UserOperationClaim<int, int>? userOperationClaim)
+    {
+        if (userOperationClaim == null)
+            await throwBusinessException(UserOperationClaimsMessages.UserOperationClaimNotExists);
+    }
 }
