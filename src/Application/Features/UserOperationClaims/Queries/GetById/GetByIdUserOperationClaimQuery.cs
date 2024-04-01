@@ -8,7 +8,7 @@ namespace Application.Features.UserOperationClaims.Queries.GetById;
 
 public class GetByIdUserOperationClaimQuery : IRequest<GetByIdUserOperationClaimResponse>
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public class GetByIdUserOperationClaimQueryHandler : IRequestHandler<GetByIdUserOperationClaimQuery, GetByIdUserOperationClaimResponse>
     {
