@@ -2,7 +2,9 @@
 using Application.Features.UserOperationClaims.Commands.DeleteUserOperationClaim;
 using Application.Features.UserOperationClaims.Dtos;
 using Application.Features.UserOperationClaims.Models;
+using Application.Features.UserOperationClaims.Queries.GetById;
 using Application.Features.UserOperationClaims.Queries.GetByUserIdUserOperationClaim;
+using Core.Application.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -18,24 +20,32 @@ public class UserOperationClaimsController : BaseController
         return Ok(result);
     }
 
-    [HttpPost("GetByUserId")]
-    public async Task<IActionResult> GetByUserId([FromBody] GetByUserIdUserOperationClaimQuery getByUserIdQuery)
+    [HttpGet]
+    public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
     {
-        UserOperationClaimGetByUserIdModel result = await Mediator.Send(getByUserIdQuery);
+        GetListUserOperationClaimQuery getListUserOperationClaimQuery = new() { PageRequest = pageRequest };
+        GetListResponse<GetListUserOperationClaimListItemDto> result = await Mediator.Send(getListUserOperationClaimQuery);
         return Ok(result);
     }
 
-    [HttpPost("Add")]
+    [HttpPost]
     public async Task<IActionResult> Add([FromBody] CreateUserOperationClaimCommand createUserOperationClaimCommand)
     {
-        CreatedUserOperationClaimDto result = await Mediator.Send(createUserOperationClaimCommand);
-        return Created("", result);
+        CreatedUserOperationClaimResponse result = await Mediator.Send(createUserOperationClaimCommand);
+        return Created(uri: "", result);
     }
 
-    [HttpPost("Delete/{Id}")]
-    public async Task<IActionResult> Delete([FromRoute] DeleteUserOperationClaimCommand deleteUserOperationClaimCommand)
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] UpdateUserOperationClaimCommand updateUserOperationClaimCommand)
     {
-        await Mediator.Send(deleteUserOperationClaimCommand);
-        return Ok();
+        UpdatedUserOperationClaimResponse result = await Mediator.Send(updateUserOperationClaimCommand);
+        return Ok(result);
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete([FromBody] DeleteUserOperationClaimCommand deleteUserOperationClaimCommand)
+    {
+        DeletedUserOperationClaimResponse result = await Mediator.Send(deleteUserOperationClaimCommand);
+        return Ok(result);
     }
 }
