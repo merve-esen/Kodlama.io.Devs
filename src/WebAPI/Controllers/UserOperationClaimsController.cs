@@ -1,9 +1,6 @@
 ﻿using Application.Features.UserOperationClaims.Commands.CreateUserOperationClaim;
 using Application.Features.UserOperationClaims.Commands.DeleteUserOperationClaim;
-using Application.Features.UserOperationClaims.Dtos;
-using Application.Features.UserOperationClaims.Models;
 using Application.Features.UserOperationClaims.Queries.GetById;
-using Application.Features.UserOperationClaims.Queries.GetByUserIdUserOperationClaim;
 using Core.Application.Requests;
 using Microsoft.AspNetCore.Mvc;
 
