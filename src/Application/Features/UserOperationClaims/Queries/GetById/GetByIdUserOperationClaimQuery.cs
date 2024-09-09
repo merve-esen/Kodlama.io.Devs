@@ -1,7 +1,6 @@
 ﻿using Application.Features.UserOperationClaims.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
-using Core.Security.Entities;
 using MediatR;
 
 namespace Application.Features.UserOperationClaims.Queries.GetById;
