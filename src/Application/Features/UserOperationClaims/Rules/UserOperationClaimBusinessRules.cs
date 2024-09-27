@@ -1,5 +1,9 @@
-﻿using Application.Services.Repositories;
-using Core.CrossCuttingConcerns.Exceptions;
+﻿using Application.Features.UserOperationClaims.Constants;
+using Application.Services.Repositories;
+using Domain.Entities;
+using Core.Application.Rules;
+using Core.CrossCuttingConcerns.Exception.Types;
+using Core.Localization.Abstraction;
 
 namespace Application.Features.UserOperationClaims.Rules;
 
