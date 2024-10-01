@@ -2,9 +2,9 @@
 
 namespace Core.Security.JWT;
 
-public interface ITokenHelper
+public interface ITokenHelper<TUserId, TOperationClaimId, TRefreshTokenId>
 {
-    AccessToken CreateToken(User user, IList<OperationClaim> operationClaims);
+    public AccessToken CreateToken(User<TUserId> user, IList<OperationClaim<TOperationClaimId>> operationClaims);
 
-    RefreshToken CreateRefreshToken(User user, string ipAddress);
+    public RefreshToken<TRefreshTokenId, TUserId> CreateRefreshToken(User<TUserId> user, string ipAddress);
 }
