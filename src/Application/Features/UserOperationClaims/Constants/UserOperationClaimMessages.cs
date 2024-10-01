@@ -1,7 +1,9 @@
 ﻿namespace Application.Features.UserOperationClaims.Constants;
 
-public class UserOperationClaimMessages
+public static class UserOperationClaimsMessages
 {
-    public const string UserOperationClaimIsAlreadyExist = "User operation claim is already exists.";
-    public const string UserOperationClaimDoesNotExist = "Requested user operation claim does not exist.";
+    public const string SectionName = "UserOperationClaims";
+
+    public const string UserOperationClaimNotExists = "UserOperationClaimNotExists";
+    public const string UserOperationClaimAlreadyExists = "UserOperationClaimAlreadyExists";
 }
