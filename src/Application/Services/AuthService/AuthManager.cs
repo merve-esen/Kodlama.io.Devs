@@ -1,6 +1,5 @@
 ﻿using Application.Services.Repositories;
 using Core.Persistence.Paging;
-using Core.Security.Entities;
 using Core.Security.JWT;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
