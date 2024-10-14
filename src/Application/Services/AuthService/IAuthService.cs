@@ -1,5 +1,4 @@
-﻿using Core.Security.Entities;
-using Core.Security.JWT;
+﻿using Core.Security.JWT;
 using Domain.Entities;
 
 namespace Application.Services.AuthService;
