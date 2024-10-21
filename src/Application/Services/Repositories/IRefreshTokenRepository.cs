@@ -3,6 +3,6 @@ using Domain.Entities;
 
 namespace Application.Services.Repositories;
 
-public interface IRefreshTokenRepository : IAsyncRepository<RefreshToken, int>, IRepository<RefreshToken, int>
+public interface IRefreshTokenRepository : IAsyncRepository<RefreshToken, Guid>, IRepository<RefreshToken, Guid>
 {
 }
