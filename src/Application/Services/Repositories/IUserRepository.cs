@@ -3,6 +3,6 @@ using Domain.Entities;
 
 namespace Application.Services.Repositories;
 
-public interface IUserRepository : IAsyncRepository<User, int>, IRepository<User, int>
+public interface IUserRepository : IAsyncRepository<User, Guid>, IRepository<User, Guid>
 {
 }
