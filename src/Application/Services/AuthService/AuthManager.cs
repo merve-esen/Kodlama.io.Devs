@@ -1,10 +1,9 @@
-﻿using System.Collections.Immutable;
-using Application.Services.Repositories;
+﻿using Application.Services.Repositories;
 using AutoMapper;
 using Core.Security.JWT;
 using Domain.Entities;
 using Microsoft.Extensions.Configuration;
-using Core.Security.JWT;
+using System.Collections.Immutable;
 
 namespace Application.Services.AuthService;
 
