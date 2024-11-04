@@ -1,5 +1,4 @@
-﻿using Core.Security.Entities;
-namespace Domain.Entities;
+﻿namespace Domain.Entities;
 
 public class UserOperationClaim : Core.Security.Entities.UserOperationClaim<Guid, Guid, int>
 {
