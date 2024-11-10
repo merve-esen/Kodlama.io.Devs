@@ -12,7 +12,7 @@ namespace Application.Features.UserOperationClaims.Queries.GetByUserIdUserOperat
 
 public class GetByUserIdUserOperationClaimQuery : IRequest<UserOperationClaimGetByUserIdModel>, ISecuredRequest
 {
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
     public PageRequest? PageRequest { get; set; }
     public string[] Roles { get; } = new string[1] { "admin" };
 
