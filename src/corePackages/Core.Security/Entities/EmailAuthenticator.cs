@@ -19,8 +19,7 @@ public class EmailAuthenticator<TUserId> : Entity<TUserId>
         IsVerified = isVerified;
     }
 
-    public EmailAuthenticator(TUserId id, TUserId userId, bool isVerified)
-        : base(id)
+    public EmailAuthenticator(TUserId id, TUserId userId, bool isVerified) : base(id)
     {
         UserId = userId;
         IsVerified = isVerified;
