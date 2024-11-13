@@ -10,5 +10,6 @@ public class UserForRegisterDto
     public UserForRegisterDto()
     {
         Email = string.Empty;
+        Password = string.Empty;
     }
 }
