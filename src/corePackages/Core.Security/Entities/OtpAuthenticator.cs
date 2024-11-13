@@ -21,8 +21,7 @@ public class OtpAuthenticator<TUserId> : Entity<TUserId>
         IsVerified = isVerified;
     }
 
-    public OtpAuthenticator(TUserId id, TUserId userId, byte[] secretKey, bool isVerified)
-        : base(id)
+    public OtpAuthenticator(TUserId id, TUserId userId, byte[] secretKey, bool isVerified) : base(id)
     {
         UserId = userId;
         SecretKey = secretKey;
