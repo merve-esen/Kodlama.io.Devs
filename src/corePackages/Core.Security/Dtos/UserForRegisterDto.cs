@@ -6,4 +6,9 @@ public class UserForRegisterDto
     public string Password { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
+
+    public UserForRegisterDto()
+    {
+        Email = string.Empty;
+    }
 }
