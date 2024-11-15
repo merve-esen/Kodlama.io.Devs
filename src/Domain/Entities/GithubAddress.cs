@@ -10,6 +10,7 @@ public class GithubAddress : Entity<int>
 
     public GithubAddress()
     {
+        Name = string.Empty;
     }
 
     public GithubAddress(int id, int userId) : this()
