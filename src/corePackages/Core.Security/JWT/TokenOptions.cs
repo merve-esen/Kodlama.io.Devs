@@ -1,4 +1,6 @@
-﻿namespace Core.Security.JWT;
+﻿using System.Xml.Linq;
+
+namespace Core.Security.JWT;
 
 public class TokenOptions
 {
@@ -10,6 +12,6 @@ public class TokenOptions
 
     public TokenOptions()
     {
-        
+        Audience = string.Empty;
     }
 }
