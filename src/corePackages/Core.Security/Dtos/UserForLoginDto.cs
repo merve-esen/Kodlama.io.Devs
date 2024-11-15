@@ -9,5 +9,6 @@ public class UserForLoginDto
     public UserForLoginDto()
     {
         Email = string.Empty;
+        Password = string.Empty;
     }
 }
