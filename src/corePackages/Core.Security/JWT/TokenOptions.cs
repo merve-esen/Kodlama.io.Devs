@@ -12,5 +12,6 @@ public class TokenOptions
     {
         Audience = string.Empty;
         Issuer = string.Empty;
+        SecurityKey = string.Empty;
     }
 }
