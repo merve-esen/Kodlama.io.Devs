@@ -11,5 +11,6 @@ public class TokenOptions
     public TokenOptions()
     {
         Audience = string.Empty;
+        Issuer = string.Empty;
     }
 }
