@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace Core.Security.JWT;
+﻿namespace Core.Security.JWT;
 
 public class TokenOptions
 {
