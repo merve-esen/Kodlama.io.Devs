@@ -3,7 +3,6 @@ using Application.Features.Auth.Rules;
 using Application.Services.AuthService;
 using Application.Services.Repositories;
 using Core.Security.Dtos;
-using Core.Security.Entities;
 using Core.Security.JWT;
 using Domain.Entities;
 using MediatR;
