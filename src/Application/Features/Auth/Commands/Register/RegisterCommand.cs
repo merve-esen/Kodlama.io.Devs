@@ -39,7 +39,7 @@ public class RegisterCommand : IRequest<RegisteredDto>
                 Email = request.UserForRegisterDto.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                FirstName = request.UserForRegisterDto.FirstName,
+                //FirstName = request.UserForRegisterDto.FirstName,
                 LastName = request.UserForRegisterDto.LastName,
                 Status = true
             };
