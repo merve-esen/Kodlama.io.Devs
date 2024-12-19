@@ -41,7 +41,7 @@ public class RegisterCommand : IRequest<RegisteredDto>
                 PasswordSalt = passwordSalt,
                 //FirstName = request.UserForRegisterDto.FirstName,
                 //LastName = request.UserForRegisterDto.LastName,
-                Status = true
+                //Status = true
             };
 
             User createdUser = await _userRepository.AddAsync(newUser);
