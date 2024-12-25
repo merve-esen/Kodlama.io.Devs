@@ -2,7 +2,6 @@
 using Application.Services.Repositories;
 using Domain.Entities;
 using Core.Application.Rules;
-using Core.CrossCuttingConcerns.Exception.Types;
 using Core.Localization.Abstraction;
 using Core.CrossCuttingConcerns.Exceptions;
 
