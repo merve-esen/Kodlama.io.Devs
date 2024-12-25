@@ -58,8 +58,8 @@ public class UserOperationClaimBusinessRules
     public async Task UserShouldNotHasOperationClaimAlreadyWhenUpdated(Guid id, Guid userId, int operationClaimId)
     {
         bool doesExist = await _userOperationClaimRepository.AnyAsync(predicate: uoc =>
-            uoc.Id == id && uoc.UserId == userId && uoc.OperationClaimId == operationClaimId
-        );
+            uoc.Id == id && uoc.UserId == userId && uoc.OperationClaimId == operationClaimId);
+
         if (doesExist)
             await throwBusinessException(UserOperationClaimsMessages.UserOperationClaimAlreadyExists);
     }
