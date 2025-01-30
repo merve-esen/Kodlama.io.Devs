@@ -8,6 +8,7 @@ public class Technology : Entity<int>
     public string Name { get; set; }
 
     public virtual ProgrammingLanguage ProgrammingLanguage { get; set; }
+
     public Technology()
     {
         Name = string.Empty;
